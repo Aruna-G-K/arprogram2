@@ -14,5 +14,5 @@ steps:
 
 artifacts:
   objects:
-    location: 'gs://YOUR_BUCKET_NAME/artifacts/'
+    location: 'gs://arx1/artifacts/'
     paths: ['target/*.jar']
