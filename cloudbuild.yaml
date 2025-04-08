@@ -1,0 +1,18 @@
+steps:
+  # Step 1: Build and run tests
+  - name: 'maven:3.8.4-openjdk-17'
+    entrypoint: 'mvn'
+    args: ['clean', 'verify']
+
+  # Step 2: Upload test results to GCS
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', '-r', 'target/surefire-reports', 'gs://YOUR_BUCKET_NAME/test-reports/']
+
+  # Step 3: Upload code coverage reports to GCS
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', '-r', 'target/site/jacoco', 'gs://YOUR_BUCKET_NAME/code-coverage/']
+
+artifacts:
+  objects:
+    location: 'gs://YOUR_BUCKET_NAME/artifacts/'
+    paths: ['target/*.jar']
